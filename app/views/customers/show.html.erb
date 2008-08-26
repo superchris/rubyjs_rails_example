@@ -1,0 +1,26 @@
+<p>
+  <b>Name:</b>
+  <%=text_field_tag "name", @customer.name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%=text_field_tag "address", @customer.address %>
+</p>
+
+<p>
+  <b>Birthday:</b>
+  <span><%=h @customer.birthday %></span>
+</p>
+
+<p>
+  <b>Widgets purchased:</b>
+  <span id="widgets_purchased"><%=h @customer.widgets_purchased %></span>
+</p>
+
+<input id="customer_id" /><input id="choose_customer_button" type="button" value="Choose Other Customer" />
+<br/><input id="save_button" type="button" value="Save" />
+<%= rubyjs "Customer", "main" %>
+
+<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<%= link_to 'Back', customers_path %>
