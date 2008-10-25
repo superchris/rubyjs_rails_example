@@ -1,27 +1,16 @@
 require 'dom_element'
 require 'json'
 require 'rwt/HTTPRequest'
+require 'foo'
+require 'bar'
 
-class Customer
-  
-  
-  attr_accessor :attributes
-  
-  def initialize(attrs)
-    @attributes = attrs
-  end
-  
-  def method_missing(method, *args)
-    if method =~ /(.*)=$/
-      attributes[$1] = args[0]
-    elsif attributes[method]
-      attributes[method]
-    else
-      super
-    end
-  end
+require 'active_resource'
+
+class Customer < ActiveResource
   
   def self.main
+    #Foo.bark
+    #Bar.bar
     @name = DOMElement.find("name")
     @address = DOMElement.find("address")
     find_button = DOMElement.find("choose_customer_button")
@@ -46,21 +35,4 @@ class Customer
       puts ex
   end
   
-  def self.find(id)
-    HTTPRequest.asyncGet "/customers/#{id}.json" do |json|
-      hash = JSON.load(json)
-      yield Customer.new(hash["customer"])
-    end    
-  end
-  
-  def save
-    request_json = {:customer => attributes}.to_json
-    HTTPRequest.asyncImpl "/customers/#{id}.json", "PUT", request_json, "application/json" do |json|
-      self.attributes = JSON.load(json)
-    end
-  end
-  
-  def to_json
-    attributes.to_json
-  end
 end

@@ -71,6 +71,7 @@ class CustomersController < ApplicationController
         format.json { render :json => @customer}
       else
         format.html { render :action => "edit" }
+        format.json { render :json => {:customer => @customer, :errors => errors}}
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
     end
